@@ -59,6 +59,7 @@
     "@types/react-dom": "19.0.4",
     "copyfiles": "2.4.1",
     "cross-env": "^7.0.3",
+    "dotenv": "^16.4.7",
     "eslint": "^9.20.1",
     "eslint-config-next": "15.1.7",
     "graphql": "^16.10.0",
@@ -109,5 +110,8 @@
       "sharp"
     ]
   },
-  "registry": "https://registry.npmjs.org/"
+  "registry": "https://registry.npmjs.org/",
+  "dependencies": {
+    "razorpay": "^2.9.5"
+  }
 }
