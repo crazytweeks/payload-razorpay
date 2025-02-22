@@ -1,5 +1,7 @@
 import type { CollectionSlug, Config } from 'payload'
 
+import { _PLUGIN_COLLECTION_SLUG } from './config/constants.js'
+
 export type PayloadRazorpayConfig = {
   /**
    * List of collections to add a custom field
@@ -16,7 +18,7 @@ export const payloadRazorpay =
     }
 
     config.collections.push({
-      slug: 'plugin-collection',
+      slug: _PLUGIN_COLLECTION_SLUG,
       fields: [
         {
           name: 'id',
@@ -67,12 +69,8 @@ export const payloadRazorpay =
       config.admin.components.beforeDashboard = []
     }
 
-    config.admin.components.beforeDashboard.push(
-      `payload-razorpay/client#BeforeDashboardClient`,
-    )
-    config.admin.components.beforeDashboard.push(
-      `payload-razorpay/rsc#BeforeDashboardServer`,
-    )
+    config.admin.components.beforeDashboard.push(`payload-razorpay/client#BeforeDashboardClient`)
+    config.admin.components.beforeDashboard.push(`payload-razorpay/rsc#BeforeDashboardServer`)
 
     config.endpoints.push({
       handler: () => {
@@ -91,19 +89,19 @@ export const payloadRazorpay =
       }
 
       const { totalDocs } = await payload.count({
-        collection: 'plugin-collection',
+        collection: _PLUGIN_COLLECTION_SLUG,
         where: {
           id: {
-            equals: 'seeded-by-plugin',
+            equals: 'seeded-by-razorpay-plugin',
           },
         },
       })
 
       if (totalDocs === 0) {
         await payload.create({
-          collection: 'plugin-collection',
+          collection: _PLUGIN_COLLECTION_SLUG,
           data: {
-            id: 'seeded-by-plugin',
+            id: 'seeded-by-razorpay-plugin',
           },
         })
       }
