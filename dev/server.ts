@@ -6,6 +6,8 @@ import open from 'open'
 import path from 'path'
 import { fileURLToPath, parse } from 'url'
 
+import { __PORT, getServerUrl } from './helpers/getServerUrl.js'
+
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const opts: NextServerOptions = {
@@ -19,11 +21,11 @@ const handle = app.getRequestHandler()
 
 await app.prepare()
 
-await open(`http://localhost:4000/admin`)
+await open(`${getServerUrl()}/admin`)
 
 const server = createServer((req, res) => {
   const parsedUrl = parse(req.url!, true)
   void handle(req, res, parsedUrl)
 })
 
-server.listen(4000)
+server.listen(__PORT)
