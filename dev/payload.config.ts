@@ -6,6 +6,7 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
+import { dbAdapter } from 'utils/dbAdapter.js'
 
 import { devUser } from './helpers/credentials.js'
 import { testEmailAdapter } from './helpers/testEmailAdapter.js'
@@ -26,6 +27,7 @@ export default buildConfig({
     },
   },
   collections: payloadCollections,
+
   db: dbAdapter(),
   editor: lexicalEditor(),
   email: testEmailAdapter,
