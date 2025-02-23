@@ -1,7 +1,9 @@
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { payloadCollections } from 'helpers/collections.js'
+import { dbAdapter } from 'helpers/dbAdapter.js'
+import { payloadPlugins } from 'helpers/plugins.js'
 import path from 'path'
 import { buildConfig } from 'payload'
-import { payloadRazorpay } from 'payload-razorpay'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 import { dbAdapter } from 'utils/dbAdapter.js'
@@ -24,33 +26,16 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [
-    {
-      slug: 'posts',
-      fields: [],
-    },
-    {
-      slug: 'media',
-      fields: [],
-      upload: {
-        staticDir: path.resolve(dirname, 'media'),
-      },
-    },
-  ],
+  collections: payloadCollections,
+
   db: dbAdapter(),
   editor: lexicalEditor(),
   email: testEmailAdapter,
   onInit: async (payload) => {
     await seed(payload)
   },
-  plugins: [
-    payloadRazorpay({
-      collections: {
-        posts: true,
-      },
-    }),
-  ],
-  secret: process.env.PAYLOAD_SECRET || 'test-secret_key',
+  plugins: payloadPlugins,
+  secret: process.env.PAYLOAD_SECRET || 'razorpay-payload-secret_key',
   sharp,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

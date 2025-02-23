@@ -20,6 +20,7 @@ export const defaultESLintIgnores = [
   '**/build/',
   '**/node_modules/',
   '**/temp/',
+  '**/reference/**/.*',
 ]
 
 export default [
