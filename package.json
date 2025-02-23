@@ -1,5 +1,5 @@
 {
-  "name": "@crazytweeks/payload-razorpay",
+  "name": "payload-razorpay",
   "version": "1.0.1",
   "description": "A Payload CMS plugin that integrates Razorpay payment gateway for handling online payments and refunds",
   "license": "MIT",
