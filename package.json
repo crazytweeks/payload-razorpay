@@ -1,5 +1,5 @@
 {
-  "name": "payload-razorpay",
+  "name": "@crazytweeks/payload-razorpay",
   "version": "1.0.1",
   "description": "A Payload CMS plugin that integrates Razorpay payment gateway for handling online payments and refunds",
   "license": "MIT",
@@ -127,7 +127,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/crazytweeks/payload-razorpay.git"
+    "url": "git+ssh://git@github.com/crazytweeks/payload-razorpay.git"
   },
   "keywords": [
     "payload",
@@ -141,7 +141,9 @@
   "dependencies": {
     "razorpay": "^2.9.5"
   },
-  "author": {
-    "name": "Bhuvan BM"
-  }
+  "author": "Bhuvan BM",
+  "bugs": {
+    "url": "https://github.com/crazytweeks/payload-razorpay/issues"
+  },
+  "homepage": "https://github.com/crazytweeks/payload-razorpay#readme"
 }
