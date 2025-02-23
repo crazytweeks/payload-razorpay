@@ -69,14 +69,14 @@ export const RazorpayTransactions: CollectionConfig = {
         { label: 'EMI', value: 'emi' },
       ],
     },
-    {
-      name: 'order',
-      type: 'relationship',
-      admin: {
-        description: 'Related order',
-      },
-      relationTo: 'orders',
-    },
+    // {
+    //   name: 'order',
+    //   type: 'relationship',
+    //   admin: {
+    //     description: 'Related order',
+    //   },
+    //   relationTo: 'orders',
+    // },
     {
       name: 'customer',
       type: 'group',

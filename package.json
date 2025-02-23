@@ -1,7 +1,7 @@
 {
   "name": "payload-razorpay",
   "version": "1.0.0",
-  "description": "A blank template to get started with Payload 3.0",
+  "description": "A Payload CMS plugin that integrates Razorpay payment gateway for handling online payments and refunds",
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -19,6 +19,11 @@
       "import": "./src/exports/rsc.ts",
       "types": "./src/exports/rsc.ts",
       "default": "./src/exports/rsc.ts"
+    },
+    "./hooks": {
+      "import": "./src/hooks/index.ts",
+      "types": "./src/hooks/index.ts",
+      "default": "./src/hooks/index.ts"
     }
   },
   "main": "./src/index.ts",
@@ -104,6 +109,11 @@
         "import": "./dist/exports/rsc.js",
         "types": "./dist/exports/rsc.d.ts",
         "default": "./dist/exports/rsc.js"
+      },
+      "./hooks": {
+        "import": "./dist/exports/hooks.js",
+        "types": "./dist/exports/hooks.d.ts",
+        "default": "./dist/exports/hooks.js"
       }
     },
     "main": "./dist/index.js",
@@ -114,8 +124,23 @@
       "sharp"
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/crazytweeks/payload-razorpay.git"
+  },
+  "keywords": [
+    "payload",
+    "cms",
+    "plugin",
+    "razorpay",
+    "payments",
+    "ecommerce"
+  ],
   "registry": "https://registry.npmjs.org/",
   "dependencies": {
     "razorpay": "^2.9.5"
+  },
+  "author": {
+    "name": "Bhuvan BM"
   }
 }
