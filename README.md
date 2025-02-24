@@ -1,5 +1,11 @@
 # Payload CMS Razorpay Plugin
 
+> ⚠️ **IMPORTANT NOTICE**
+>
+> This plugin is currently in alpha (v0.0.1-alpha.1) and under active development.
+> It is not recommended for production use as breaking changes may occur.
+> Use at your own risk in development environments only.
+
 A powerful Payload CMS plugin that seamlessly integrates Razorpay payment gateway for handling online payments and refunds in your Payload CMS applications.
 
 [![npm version](https://badge.fury.io/js/payload-razorpay.svg)](https://badge.fury.io/js/payload-razorpay)
@@ -38,10 +44,15 @@ import { razorpayPlugin } from 'payload-razorpay'
 export default buildConfig({
   plugins: [
     razorpayPlugin({
-      key_id: process.env.RAZORPAY_KEY_ID,
-      key_secret: process.env.RAZORPAY_KEY_SECRET,
-      // Optional configuration
-      webhookSecret: process.env.RAZORPAY_WEBHOOK_SECRET,
+      razorpay: {
+        keyId: process.env.RAZORPAY_KEY_ID ?? '',
+        keySecret: process.env.RAZORPAY_KEY_SECRET ?? '',
+        // Optional configuration
+        webhookSecret: process.env.RAZORPAY_WEBHOOK_SECRET,
+      },
+      webhook: {
+        enabled: false, // Set to true if you want to enable webhook handling
+      },
     }),
   ],
 })
@@ -72,11 +83,12 @@ export const Orders: CollectionConfig = {
 
 ### Plugin Options
 
-| Option        | Type   | Required | Description                                    |
-| ------------- | ------ | -------- | ---------------------------------------------- |
-| key_id        | string | Yes      | Your Razorpay API Key ID                       |
-| key_secret    | string | Yes      | Your Razorpay API Key Secret                   |
-| webhookSecret | string | No       | Webhook secret for verifying Razorpay webhooks |
+| Option                 | Type    | Required | Description                                      |
+| ---------------------- | ------- | -------- | ------------------------------------------------ |
+| razorpay.keyId         | string  | Yes      | Your Razorpay API Key ID                         |
+| razorpay.keySecret     | string  | Yes      | Your Razorpay API Key Secret                     |
+| razorpay.webhookSecret | string  | No       | Webhook secret for verifying Razorpay webhooks   |
+| webhook.enabled        | boolean | No       | Enable/disable webhook handling (default: false) |
 
 ### Available Hooks
 
