@@ -139,6 +139,7 @@
   ],
   "registry": "https://registry.npmjs.org/",
   "dependencies": {
+    "payload-razorpay": "link:../../.local/share/pnpm/global/5/node_modules/payload-razorpay",
     "razorpay": "^2.9.5"
   },
   "author": "Bhuvan BM",

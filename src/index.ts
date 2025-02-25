@@ -1,11 +1,12 @@
 import type { Config } from 'payload'
 
 import type { PayloadRazorpayConfig } from './types/config.js'
+
 import { endpoints } from './api/razorpay/index.js'
-import { defaultConfig, setConfig } from './config/defaults.js'
+import { orderFields } from './collections/extensions/orders.js'
 import { RazorpayRefunds } from './collections/razorpay-refunds.js'
 import { RazorpayTransactions } from './collections/razorpay-transactions.js'
-import { orderFields } from './collections/extensions/orders.js'
+import { defaultConfig, setConfig } from './config/defaults.js'
 
 export const razorpayPlugin =
   (incomingConfig: PayloadRazorpayConfig) =>
@@ -45,7 +46,6 @@ export const razorpayPlugin =
 
     config.endpoints.push(...endpoints)
 
-    console.log(config)
     return config
   }
 
