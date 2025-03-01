@@ -2,7 +2,7 @@ import type { PayloadRequest } from 'payload'
 
 import { getPluginConfig } from '../../config/defaults.js'
 
-export const configHandler = async (req: PayloadRequest) => {
+export const configHandler = (_req: PayloadRequest) => {
   const config = getPluginConfig()
 
   // Check if Razorpay is properly configured

@@ -1,4 +1,4 @@
-import type { Config } from 'payload'
+import type { Config, Endpoint } from 'payload'
 
 import type { PayloadRazorpayConfig } from './types/config.js'
 
@@ -39,12 +39,7 @@ export const razorpayPlugin =
       }
     }
 
-    // Add endpoints
-    if (!config.endpoints) {
-      config.endpoints = []
-    }
-
-    config.endpoints.push(...endpoints)
+    config.endpoints = endpoints
 
     return config
   }
