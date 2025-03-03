@@ -1,7 +1,11 @@
 'use client'
 
-import React, { FC } from 'react'
+import type { FC } from 'react'
+
+import React from 'react'
+
 import { useRazorpayConfig } from '../../src/hooks/useRazorpayConfig.js'
+import RazorpayExampleComponent from './RazorpayAxiosExample.js'
 
 const LoadingSpinner: FC = () => (
   <div className="flex justify-center items-center p-8">
@@ -41,14 +45,20 @@ const TestRazorpay: FC = () => {
   const { data, error, isLoading } = useRazorpayConfig()
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Razorpay Test Configuration</h2>
+    <div className="flex flex-col">
+      <div className="max-w-3xl mx-auto p-6 flex-auto">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">Razorpay Test Configuration</h2>
 
-      {isLoading && <LoadingSpinner />}
+        {isLoading && <LoadingSpinner />}
 
-      {error && <ErrorDisplay error={error} />}
+        {error && <ErrorDisplay error={error} />}
 
-      {data && !error && <ConfigDisplay data={data} />}
+        {data && !error && <ConfigDisplay data={data} />}
+      </div>
+
+      <div className="flex-1">
+        <RazorpayExampleComponent />
+      </div>
     </div>
   )
 }

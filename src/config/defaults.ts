@@ -1,4 +1,4 @@
-import type { PayloadRazorpayConfig, RazorpayConfig } from '../types/config.js'
+import type { PayloadRazorpayConfig, RazorpayConfig } from '../types/config'
 
 let pluginConfig: null | PayloadRazorpayConfig = null
 

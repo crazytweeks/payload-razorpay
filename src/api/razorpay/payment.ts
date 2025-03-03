@@ -1,15 +1,15 @@
 import type { PayloadRequest } from 'payload'
 
-import { getRazorpayInstance } from '../../lib/razorpay.js'
-import { toRazorpayAmount } from '../../utils/currency.js'
-import { validatePaymentVerification } from '../../utils/validation.js'
+import { getRazorpayInstance } from '../../lib/razorpay'
+import { toRazorpayAmount } from '../../utils/currency'
+import { validatePaymentVerification } from '../../utils/validation'
 
 export const createPayment = async (req: PayloadRequest) => {
   try {
     if (!req.json) {
       return new Response(JSON.stringify({ error: 'Invalid request format' }), {
-        status: 400,
         headers: { 'Content-Type': 'application/json' },
+        status: 400,
       })
     }
 
@@ -35,6 +35,7 @@ export const createPayment = async (req: PayloadRequest) => {
         notes,
         order: orderId,
         razorpay_order_id: order.id,
+        razorpay_payment_id: `${Math.random()}-${order.id}-123`,
         status: 'created',
       },
     })
@@ -48,19 +49,19 @@ export const createPayment = async (req: PayloadRequest) => {
         success: true,
       }),
       {
-        status: 200,
         headers: { 'Content-Type': 'application/json' },
+        status: 200,
       },
     )
-  } catch (error: any) {
+  } catch (error: unknown) {
     return new Response(
       JSON.stringify({
-        error: error.message,
+        error: (error as Error).message,
         success: false,
       }),
       {
-        status: 400,
         headers: { 'Content-Type': 'application/json' },
+        status: 400,
       },
     )
   }
@@ -70,8 +71,8 @@ export const verifyPayment = async (req: PayloadRequest) => {
   try {
     if (!req.json) {
       return new Response(JSON.stringify({ error: 'Invalid request format' }), {
-        status: 400,
         headers: { 'Content-Type': 'application/json' },
+        status: 400,
       })
     }
 
@@ -91,8 +92,8 @@ export const verifyPayment = async (req: PayloadRequest) => {
           success: false,
         }),
         {
-          status: 400,
           headers: { 'Content-Type': 'application/json' },
+          status: 400,
         },
       )
     }
@@ -117,19 +118,19 @@ export const verifyPayment = async (req: PayloadRequest) => {
         success: true,
       }),
       {
-        status: 200,
         headers: { 'Content-Type': 'application/json' },
+        status: 200,
       },
     )
-  } catch (error: any) {
+  } catch (error: unknown) {
     return new Response(
       JSON.stringify({
-        error: error.message,
+        error: (error as Error).message,
         success: false,
       }),
       {
-        status: 400,
         headers: { 'Content-Type': 'application/json' },
+        status: 400,
       },
     )
   }

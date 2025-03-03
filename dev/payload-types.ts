@@ -68,7 +68,9 @@ export interface Config {
   collections: {
     posts: Post;
     media: Media;
-    'plugin-collection': PluginCollection;
+    'razorpay-orders': RazorpayOrder;
+    'razorpay-transactions': RazorpayTransaction;
+    'razorpay-refunds': RazorpayRefund;
     users: User;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,14 +80,16 @@ export interface Config {
   collectionsSelect: {
     posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    'plugin-collection': PluginCollectionSelect<false> | PluginCollectionSelect<true>;
+    'razorpay-orders': RazorpayOrdersSelect<false> | RazorpayOrdersSelect<true>;
+    'razorpay-transactions': RazorpayTransactionsSelect<false> | RazorpayTransactionsSelect<true>;
+    'razorpay-refunds': RazorpayRefundsSelect<false> | RazorpayRefundsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   globals: {};
   globalsSelect: {};
@@ -121,8 +125,7 @@ export interface UserAuthOperations {
  * via the `definition` "posts".
  */
 export interface Post {
-  id: string;
-  addedByPlugin?: string | null;
+  id: number;
   updatedAt: string;
   createdAt: string;
 }
@@ -131,7 +134,7 @@ export interface Post {
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -146,10 +149,128 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "plugin-collection".
+ * via the `definition` "razorpay-orders".
  */
-export interface PluginCollection {
-  id: string;
+export interface RazorpayOrder {
+  id: number;
+  payment: {
+    status: 'pending' | 'paid' | 'failed' | 'refunded';
+    /**
+     * Total amount in smallest currency unit (paise)
+     */
+    amount: number;
+    currency: string;
+    /**
+     * Razorpay Order ID
+     */
+    razorpay_order_id?: string | null;
+    /**
+     * Related payment transactions
+     */
+    transactions?: (number | RazorpayTransaction)[] | null;
+    /**
+     * Related refunds
+     */
+    refunds?: (number | RazorpayRefund)[] | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "razorpay-transactions".
+ */
+export interface RazorpayTransaction {
+  id: number;
+  /**
+   * Razorpay Payment ID
+   */
+  razorpay_payment_id?: string | null;
+  /**
+   * Razorpay Order ID
+   */
+  razorpay_order_id: string;
+  /**
+   * Amount in smallest currency unit (paise)
+   */
+  amount: number;
+  currency: string;
+  status: 'created' | 'authorized' | 'captured' | 'failed' | 'refunded';
+  method?: ('card' | 'netbanking' | 'upi' | 'wallet' | 'emi') | null;
+  /**
+   * Related order
+   */
+  order?: (number | null) | RazorpayOrder;
+  customer?: {
+    email?: string | null;
+    name?: string | null;
+    contact?: string | null;
+  };
+  /**
+   * Additional notes or metadata
+   */
+  notes?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  error?: {
+    code?: string | null;
+    description?: string | null;
+    source?: string | null;
+    step?: string | null;
+    reason?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "razorpay-refunds".
+ */
+export interface RazorpayRefund {
+  id: number;
+  /**
+   * Razorpay Refund ID
+   */
+  razorpay_refund_id: string;
+  /**
+   * Original Payment ID
+   */
+  razorpay_payment_id: string;
+  /**
+   * Refund amount in smallest currency unit (paise)
+   */
+  amount: number;
+  status: 'pending' | 'processed' | 'failed';
+  speed: 'normal' | 'optimum';
+  receipt?: string | null;
+  /**
+   * Related transaction
+   */
+  transaction: number | RazorpayTransaction;
+  /**
+   * Additional notes or metadata
+   */
+  notes?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  error?: {
+    code?: string | null;
+    description?: string | null;
+    source?: string | null;
+    reason?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -158,7 +279,7 @@ export interface PluginCollection {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -175,28 +296,36 @@ export interface User {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'posts';
-        value: string | Post;
+        value: number | Post;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
       } | null)
     | ({
-        relationTo: 'plugin-collection';
-        value: string | PluginCollection;
+        relationTo: 'razorpay-orders';
+        value: number | RazorpayOrder;
+      } | null)
+    | ({
+        relationTo: 'razorpay-transactions';
+        value: number | RazorpayTransaction;
+      } | null)
+    | ({
+        relationTo: 'razorpay-refunds';
+        value: number | RazorpayRefund;
       } | null)
     | ({
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -206,10 +335,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -229,7 +358,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -240,7 +369,6 @@ export interface PayloadMigration {
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
-  addedByPlugin?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -263,10 +391,75 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "plugin-collection_select".
+ * via the `definition` "razorpay-orders_select".
  */
-export interface PluginCollectionSelect<T extends boolean = true> {
-  id?: T;
+export interface RazorpayOrdersSelect<T extends boolean = true> {
+  payment?:
+    | T
+    | {
+        status?: T;
+        amount?: T;
+        currency?: T;
+        razorpay_order_id?: T;
+        transactions?: T;
+        refunds?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "razorpay-transactions_select".
+ */
+export interface RazorpayTransactionsSelect<T extends boolean = true> {
+  razorpay_payment_id?: T;
+  razorpay_order_id?: T;
+  amount?: T;
+  currency?: T;
+  status?: T;
+  method?: T;
+  order?: T;
+  customer?:
+    | T
+    | {
+        email?: T;
+        name?: T;
+        contact?: T;
+      };
+  notes?: T;
+  error?:
+    | T
+    | {
+        code?: T;
+        description?: T;
+        source?: T;
+        step?: T;
+        reason?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "razorpay-refunds_select".
+ */
+export interface RazorpayRefundsSelect<T extends boolean = true> {
+  razorpay_refund_id?: T;
+  razorpay_payment_id?: T;
+  amount?: T;
+  status?: T;
+  speed?: T;
+  receipt?: T;
+  transaction?: T;
+  notes?: T;
+  error?:
+    | T
+    | {
+        code?: T;
+        description?: T;
+        source?: T;
+        reason?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

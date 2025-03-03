@@ -1,6 +1,7 @@
+import React from 'react'
 
 import TestRazorpay from '../../components/testRazorpay.js'
-import React from 'react'
+import './globals.css'
 
 const HomePage = () => {
   return (

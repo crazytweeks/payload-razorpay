@@ -1,7 +1,8 @@
 import type { PayloadRequest } from 'payload'
 
-import type { WebhookEvent } from '../../types/webhook.js'
-import { validateWebhookSignature } from '../../utils/validation.js'
+import type { WebhookEvent } from '../../types/webhook'
+
+import { validateWebhookSignature } from '../../utils/validation'
 
 export const webhookHandler = async (req: PayloadRequest) => {
   try {
@@ -9,15 +10,15 @@ export const webhookHandler = async (req: PayloadRequest) => {
 
     if (!signature || typeof signature !== 'string') {
       return new Response(JSON.stringify({ error: 'Missing signature' }), {
-        status: 400,
         headers: { 'Content-Type': 'application/json' },
+        status: 400,
       })
     }
 
     if (!req.json) {
       return new Response(JSON.stringify({ error: 'Invalid request format' }), {
-        status: 400,
         headers: { 'Content-Type': 'application/json' },
+        status: 400,
       })
     }
 
@@ -28,8 +29,8 @@ export const webhookHandler = async (req: PayloadRequest) => {
 
     if (!isValid) {
       return new Response(JSON.stringify({ error: 'Invalid signature' }), {
-        status: 400,
         headers: { 'Content-Type': 'application/json' },
+        status: 400,
       })
     }
 
@@ -50,15 +51,15 @@ export const webhookHandler = async (req: PayloadRequest) => {
     }
 
     return new Response(JSON.stringify({ status: 'ok' }), {
-      status: 200,
       headers: { 'Content-Type': 'application/json' },
+      status: 200,
     })
   } catch (error) {
     return new Response(
       JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),
       {
-        status: 500,
         headers: { 'Content-Type': 'application/json' },
+        status: 500,
       },
     )
   }

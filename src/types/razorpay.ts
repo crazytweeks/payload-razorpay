@@ -1,13 +1,13 @@
 export interface RazorpayOrder {
-  id: string
-  entity: string
   amount: number
-  amount_paid: number
   amount_due: number
+  amount_paid: number
+  attempts: number
+  created_at: number
   currency: string
+  entity: string
+  id: string
+  notes: Record<string, string>
   receipt: string
   status: string
-  attempts: number
-  notes: Record<string, string>
-  created_at: number
 }

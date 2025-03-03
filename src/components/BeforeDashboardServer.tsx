@@ -2,7 +2,7 @@ import type { ServerComponentProps } from 'payload'
 
 import { Banner, Button } from '@payloadcms/ui'
 
-import { getPluginConfig } from '../config/defaults.js'
+import { getPluginConfig } from '../config/defaults'
 import styles from './BeforeDashboardServer.module.css'
 
 export const BeforeDashboardServer = async (props: ServerComponentProps) => {

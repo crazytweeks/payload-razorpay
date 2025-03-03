@@ -1,14 +1,13 @@
-import React from 'react'
 import { Banner, Card } from '@payloadcms/ui'
+import React from 'react'
 
-import { useRazorpayConfig } from '../../hooks/useRazorpayConfig.js'
-import { TestPaymentButton } from './TestPaymentButton.js'
-import { WebhookStatus } from './WebhookStatus.js'
-
+import { useRazorpayConfig } from '../../hooks/useRazorpayConfig'
+import { TestPaymentButton } from './TestPaymentButton'
+import { WebhookStatus } from './WebhookStatus'
 import './styles.scss'
 
 export const RazorpayDashboard: React.FC = () => {
-  const { data: config, isLoading, error } = useRazorpayConfig()
+  const { data: config, error, isLoading } = useRazorpayConfig()
 
   if (isLoading) {
     return <div>Loading Razorpay configuration...</div>

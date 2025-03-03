@@ -1,6 +1,6 @@
 import type { PayloadRequest } from 'payload'
 
-import { getPluginConfig } from '../../config/defaults.js'
+import { getPluginConfig } from '../../config/defaults'
 
 export const configHandler = (_req: PayloadRequest) => {
   const config = getPluginConfig()

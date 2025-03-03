@@ -1,8 +1,8 @@
 import type { Endpoint } from 'payload'
 
-import { configHandler } from './config.js'
-import { createPayment, verifyPayment } from './payment.js'
-import { webhookHandler } from './webhook.js'
+import { configHandler } from './config'
+import { createPayment, verifyPayment } from './payment'
+import { webhookHandler } from './webhook'
 
 export const endpoints: Endpoint[] = [
   {

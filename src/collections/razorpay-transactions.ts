@@ -2,12 +2,6 @@ import type { CollectionConfig } from 'payload'
 
 export const RazorpayTransactions: CollectionConfig = {
   slug: 'razorpay-transactions',
-  access: {
-    create: () => true,
-    delete: () => true,
-    read: () => true,
-    update: () => true,
-  },
   admin: {
     defaultColumns: ['razorpay_payment_id', 'amount', 'status', 'createdAt'],
     group: 'Razorpay',
@@ -20,8 +14,8 @@ export const RazorpayTransactions: CollectionConfig = {
       admin: {
         description: 'Razorpay Payment ID',
       },
-      required: true,
-      unique: true,
+      label: 'Payment ID',
+      required: false,
     },
     {
       name: 'razorpay_order_id',
@@ -29,6 +23,7 @@ export const RazorpayTransactions: CollectionConfig = {
       admin: {
         description: 'Razorpay Order ID',
       },
+      label: 'Order ID',
       required: true,
     },
     {
@@ -69,14 +64,14 @@ export const RazorpayTransactions: CollectionConfig = {
         { label: 'EMI', value: 'emi' },
       ],
     },
-    // {
-    //   name: 'order',
-    //   type: 'relationship',
-    //   admin: {
-    //     description: 'Related order',
-    //   },
-    //   relationTo: 'orders',
-    // },
+    {
+      name: 'order',
+      type: 'relationship',
+      admin: {
+        description: 'Related order',
+      },
+      relationTo: 'razorpay-orders',
+    },
     {
       name: 'customer',
       type: 'group',

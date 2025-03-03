@@ -1,14 +1,14 @@
 import type { CollectionAfterChangeHook } from 'payload'
 
-import { getRazorpayInstance } from '../lib/razorpay.js'
+import { getRazorpayInstance } from '../lib/razorpay'
 
 type RefundData = {
-  id: number
-  payment_id: string
   amount: number
-  speed?: 'normal' | 'optimum'
+  id: number
   notes?: Record<string, string>
+  payment_id: string
   receipt?: string
+  speed?: 'normal' | 'optimum'
 }
 
 export const handleRefund: CollectionAfterChangeHook<RefundData> = async ({
@@ -27,15 +27,15 @@ export const handleRefund: CollectionAfterChangeHook<RefundData> = async ({
     // Create refund in Razorpay
     const refund = await razorpay.payments.refund(doc.payment_id, {
       amount: doc.amount,
-      speed: doc.speed || 'normal',
       notes: doc.notes,
       receipt: doc.receipt,
+      speed: doc.speed || 'normal',
     })
 
     // Update refund record with Razorpay details
     await req.payload.update({
-      collection: 'razorpay-refunds',
       id: doc.id,
+      collection: 'razorpay-refunds',
       data: {
         razorpay_refund_id: refund.id,
         status: refund.status,
@@ -45,8 +45,8 @@ export const handleRefund: CollectionAfterChangeHook<RefundData> = async ({
     return doc
   } catch (error: any) {
     req.payload.logger.error({
-      msg: 'Error processing refund',
       error: error.message,
+      msg: 'Error processing refund',
     })
     throw error
   }

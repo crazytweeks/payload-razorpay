@@ -16,8 +16,8 @@ export type PayloadRazorpayConfig = {
   /**
    * Collections to add payment-related fields
    */
-  collections?: {
-    orders?: CollectionConfig
+  collections: {
+    orders: CollectionConfig
     products?: CollectionConfig
   }
   /**

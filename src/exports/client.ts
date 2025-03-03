@@ -1,1 +1,3 @@
-export { BeforeDashboardClient } from '../components/BeforeDashboardClient.js'
+export { BeforeDashboardClient } from '../components/BeforeDashboardClient'
+
+export * from '../hooks/index'

@@ -1,12 +1,12 @@
-import type { Config, Endpoint } from 'payload'
+import type { Config } from 'payload'
 
-import type { PayloadRazorpayConfig } from './types/config.js'
+import type { PayloadRazorpayConfig } from './types/config'
 
-import { endpoints } from './api/razorpay/index.js'
-import { orderFields } from './collections/extensions/orders.js'
-import { RazorpayRefunds } from './collections/razorpay-refunds.js'
-import { RazorpayTransactions } from './collections/razorpay-transactions.js'
-import { defaultConfig, setConfig } from './config/defaults.js'
+import { endpoints } from './api/razorpay/index'
+import { RazorpayOrders } from './collections/razorpay-orderrs'
+import { RazorpayRefunds } from './collections/razorpay-refunds'
+import { RazorpayTransactions } from './collections/razorpay-transactions'
+import { defaultConfig, setConfig } from './config/defaults'
 
 export const razorpayPlugin =
   (incomingConfig: PayloadRazorpayConfig) =>
@@ -23,21 +23,9 @@ export const razorpayPlugin =
     }
 
     // Add Razorpay collections
+    config.collections.push(RazorpayOrders)
     config.collections.push(RazorpayTransactions)
     config.collections.push(RazorpayRefunds)
-
-    // Add payment fields to order collection if specified
-    const orderSlug = incomingConfig.collections?.orders?.slug
-    if (orderSlug) {
-      const orderCollection = config.collections.find((collection) => collection.slug === orderSlug)
-
-      if (orderCollection) {
-        if (!orderCollection.fields) {
-          orderCollection.fields = []
-        }
-        orderCollection.fields.push(...orderFields)
-      }
-    }
 
     config.endpoints = endpoints
 
@@ -45,6 +33,6 @@ export const razorpayPlugin =
   }
 
 // Export types
-export * from './types/config.js'
-export * from './types/payment.js'
-export * from './types/webhook.js'
+export * from './types/config'
+export * from './types/payment'
+export * from './types/webhook'

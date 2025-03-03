@@ -92,11 +92,13 @@ export const Orders: CollectionConfig = {
 
 ### Available Hooks
 
-- `useRazorpay`: Main hook for payment processing
-- `useRazorpayWebhook`: Handle Razorpay webhooks
-- `useRazorpayRefund`: Process refunds
+- `createPaymentInRazorpay`: Create Razorpay payment during order creation
+- `createSubscriptionInRazorpay`: Create Razorpay subscription for recurring payments
+- `handleRefund`: Process refunds through Razorpay
+- `useRazorpayConfig`: Get Razorpay configuration in client components
+- `useRazorpayAxios`: Create and process payments with axios instead of fetch (recommended)
 
-### Client-side Usage
+### Client-side Usage with Standard Hooks
 
 ```typescript
 import { createPayment } from 'payload-razorpay/client'
@@ -107,6 +109,39 @@ const payment = await createPayment({
   currency: 'INR',
   // ... other options
 })
+```
+
+### Client-side Usage with Axios-based Hook
+
+```tsx
+import { useRazorpayAxios } from 'payload-razorpay/hooks'
+
+// In your React component
+const PaymentComponent = () => {
+  const { createAndProcessPayment, isLoading, error } = useRazorpayAxios()
+
+  const handlePayNow = async () => {
+    await createAndProcessPayment({
+      amount: 1000, // Amount in paise (₹10.00)
+      currency: 'INR',
+      description: 'Product Purchase',
+      prefill: {
+        name: 'Customer Name',
+        email: 'customer@example.com',
+        contact: '9999999999',
+      },
+      onSuccess: (data) => {
+        console.log('Payment successful!', data)
+      },
+    })
+  }
+
+  return (
+    <button onClick={handlePayNow} disabled={isLoading}>
+      {isLoading ? 'Processing...' : 'Pay Now'}
+    </button>
+  )
+}
 ```
 
 ### Server-side Usage (RSC)

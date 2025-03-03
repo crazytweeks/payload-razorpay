@@ -1,7 +1,8 @@
 import type { Config, CustomComponent } from 'payload'
 
-import type { PayloadRazorpayConfig } from './types/config.js'
-import { defaultConfig, setConfig } from './config/defaults.js'
+import type { PayloadRazorpayConfig } from './types/config'
+
+import { defaultConfig, setConfig } from './config/defaults'
 
 export const razorpayPlugin =
   (incomingConfig: PayloadRazorpayConfig) =>

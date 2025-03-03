@@ -1,5 +1,5 @@
-import React from 'react'
 import { Button } from '@payloadcms/ui'
+import React from 'react'
 
 type TestPaymentButtonProps = {
   keyId: string
@@ -14,10 +14,6 @@ export const TestPaymentButton: React.FC<TestPaymentButtonProps> = ({ keyId }) =
 
       // Create a test payment
       const response = await fetch('/api/razorpay/create-payment', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: JSON.stringify({
           amount: 100, // ₹100
           currency: 'INR',
@@ -25,6 +21,10 @@ export const TestPaymentButton: React.FC<TestPaymentButtonProps> = ({ keyId }) =
             type: 'test_payment',
           },
         }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
       })
 
       const { data } = await response.json()
@@ -35,24 +35,22 @@ export const TestPaymentButton: React.FC<TestPaymentButtonProps> = ({ keyId }) =
 
       // Initialize Razorpay
       const options = {
-        key: keyId,
+        name: 'Test Payment',
         amount: data.order.amount,
         currency: data.order.currency,
-        name: 'Test Payment',
         description: 'Testing Razorpay Integration',
-        order_id: data.order.id,
         handler: async (response: any) => {
           // Verify payment
           const verifyResponse = await fetch('/api/razorpay/verify-payment', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
             body: JSON.stringify({
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
             }),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            method: 'POST',
           })
 
           const verifyData = await verifyResponse.json()
@@ -63,10 +61,12 @@ export const TestPaymentButton: React.FC<TestPaymentButtonProps> = ({ keyId }) =
             alert('Payment verification failed')
           }
         },
+        key: keyId,
+        order_id: data.order.id,
         prefill: {
           name: 'Test User',
-          email: 'test@example.com',
           contact: '9999999999',
+          email: 'test@example.com',
         },
         theme: {
           color: '#000000',
@@ -87,7 +87,7 @@ export const TestPaymentButton: React.FC<TestPaymentButtonProps> = ({ keyId }) =
     <div className="test-payment">
       <h3>Test Payment</h3>
       <p>Create a test payment to verify your integration</p>
-      <Button onClick={handleTestPayment} disabled={loading}>
+      <Button disabled={loading} onClick={handleTestPayment}>
         {loading ? 'Processing...' : 'Create Test Payment (₹100)'}
       </Button>
 

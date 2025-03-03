@@ -1,5 +1,5 @@
-import React from 'react'
 import { Banner, CopyToClipboard } from '@payloadcms/ui'
+import React from 'react'
 
 type WebhookStatusProps = {
   enabled: boolean

@@ -1,14 +1,13 @@
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { payloadCollections } from 'helpers/collections.js'
-import { dbAdapter } from 'helpers/dbAdapter.js'
-import { payloadPlugins } from 'helpers/plugins.js'
 import path from 'path'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
-import { dbAdapter } from 'utils/dbAdapter.js'
 
+import { payloadCollections } from './helpers/collections.js'
 import { devUser } from './helpers/credentials.js'
+import { dbAdapter } from './helpers/dbAdapter.js'
+import { payloadPlugins } from './helpers/plugins.js'
 import { testEmailAdapter } from './helpers/testEmailAdapter.js'
 import { seed } from './seed.js'
 

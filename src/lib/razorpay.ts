@@ -1,8 +1,8 @@
 import Razorpay from 'razorpay'
 
-import type { RazorpayConfig } from '../types/config.js'
+import type { RazorpayConfig } from '../types/config'
 
-import { getConfig } from '../config/defaults.js'
+import { getConfig } from '../config/defaults'
 
 let razorpayInstance: null | Razorpay = null
 

@@ -1,6 +1,6 @@
-import crypto from 'crypto'
+import * as crypto from 'node:crypto'
 
-import { getPluginConfig } from '../config/defaults.js'
+import { getPluginConfig } from '../config/defaults'
 
 export const validateWebhookSignature = (body: string, signature: string): boolean => {
   const config = getPluginConfig()

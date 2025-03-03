@@ -2,12 +2,6 @@ import type { CollectionConfig } from 'payload'
 
 export const RazorpayRefunds: CollectionConfig = {
   slug: 'razorpay-refunds',
-  access: {
-    create: () => true,
-    delete: () => true,
-    read: () => true,
-    update: () => true,
-  },
   admin: {
     defaultColumns: ['razorpay_refund_id', 'amount', 'status', 'createdAt'],
     group: 'Razorpay',
