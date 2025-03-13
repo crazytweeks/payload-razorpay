@@ -1,4 +1,4 @@
-import type { PayloadRequest } from 'payload'
+import { type PayloadRequest } from 'payload'
 
 import type { WebhookEvent } from '../../types/webhook'
 
@@ -36,6 +36,11 @@ export const webhookHandler = async (req: PayloadRequest) => {
 
     const event = body as WebhookEvent
 
+    console.info({
+      event,
+      msg: 'Received webhook event',
+      req,
+    })
     // Handle different event types
     switch (event.event) {
       case 'payment.captured':

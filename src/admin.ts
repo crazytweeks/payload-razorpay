@@ -1,4 +1,4 @@
-import type { Config, CustomComponent } from 'payload'
+import type { Config } from 'payload'
 
 import type { PayloadRazorpayConfig } from './types/config'
 
