@@ -54,6 +54,7 @@ export type SupportedTimezones =
   | 'Asia/Singapore'
   | 'Asia/Tokyo'
   | 'Asia/Seoul'
+  | 'Australia/Brisbane'
   | 'Australia/Sydney'
   | 'Pacific/Guam'
   | 'Pacific/Noumea'
@@ -71,6 +72,7 @@ export interface Config {
     'razorpay-orders': RazorpayOrder;
     'razorpay-transactions': RazorpayTransaction;
     'razorpay-refunds': RazorpayRefund;
+    'razorpay-logs': RazorpayLog;
     users: User;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -83,6 +85,7 @@ export interface Config {
     'razorpay-orders': RazorpayOrdersSelect<false> | RazorpayOrdersSelect<true>;
     'razorpay-transactions': RazorpayTransactionsSelect<false> | RazorpayTransactionsSelect<true>;
     'razorpay-refunds': RazorpayRefundsSelect<false> | RazorpayRefundsSelect<true>;
+    'razorpay-logs': RazorpayLogsSelect<false> | RazorpayLogsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -126,6 +129,7 @@ export interface UserAuthOperations {
  */
 export interface Post {
   id: number;
+  title: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -276,6 +280,25 @@ export interface RazorpayRefund {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "razorpay-logs".
+ */
+export interface RazorpayLog {
+  id: number;
+  event: string;
+  payload:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -317,6 +340,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'razorpay-refunds';
         value: number | RazorpayRefund;
+      } | null)
+    | ({
+        relationTo: 'razorpay-logs';
+        value: number | RazorpayLog;
       } | null)
     | ({
         relationTo: 'users';
@@ -369,6 +396,7 @@ export interface PayloadMigration {
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
+  title?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -460,6 +488,16 @@ export interface RazorpayRefundsSelect<T extends boolean = true> {
         source?: T;
         reason?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "razorpay-logs_select".
+ */
+export interface RazorpayLogsSelect<T extends boolean = true> {
+  event?: T;
+  payload?: T;
   updatedAt?: T;
   createdAt?: T;
 }

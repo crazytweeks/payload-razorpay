@@ -8,7 +8,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en" suppressHydrationWarning>
       <head>
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
-        <link href="/mss.svg" rel="icon" type="image/svg+xml" />
+        <link href="/logo.svg" rel="icon" type="image/svg+xml" />
       </head>
       <body>{children}</body>
     </html>

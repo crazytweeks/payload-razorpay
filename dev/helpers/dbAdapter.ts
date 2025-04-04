@@ -1,34 +1,26 @@
-import { mongooseAdapter } from '@payloadcms/db-mongodb'
+// import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 
-const _DATABASE_URI = process.env.DATABASE_URI ?? null
+const _POSTGRES_URL = process.env.POSTGRES_URL ?? process.env.DATABASE_URL ?? null
 
 const dbAdapter = () => {
-  if (!_DATABASE_URI) {
+  if (!_POSTGRES_URL) {
     throw new Error('DB URI NOT DEFINED IN ENV!')
   }
 
-  const adaptor = _DATABASE_URI?.startsWith('postgresql')
-    ? 'postgres'
-    : _DATABASE_URI.startsWith('mongo')
-      ? 'mongodb'
-      : undefined
+  return postgresAdapter({
+    pool: {
+      connectionString: _POSTGRES_URL,
+    },
+  })
 
-  if (adaptor === 'postgres') {
-    return postgresAdapter({
-      pool: {
-        connectionString: _DATABASE_URI,
-      },
-    })
-  }
+  // if (adaptor === 'mongodb') {
+  //   return mongooseAdapter({
+  //     url: _POSTGRES_URL,
+  //   })
+  // }
 
-  if (adaptor === 'mongodb') {
-    return mongooseAdapter({
-      url: _DATABASE_URI,
-    })
-  }
-
-  throw new Error('DB URI IS INVALID!!!')
+  // throw new Error('DB URI IS INVALID!!!')
 }
 
 export { dbAdapter }

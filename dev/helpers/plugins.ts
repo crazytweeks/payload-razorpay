@@ -1,6 +1,6 @@
 import type { CollectionConfig, Plugin } from 'payload'
 
-import { razorpayPlugin } from 'payload-razorpay'
+import { razorpayPlugin } from '../../src/index.js'
 
 const payloadPlugins: Plugin[] = [
   razorpayPlugin({

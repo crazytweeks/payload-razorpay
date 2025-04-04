@@ -8,7 +8,21 @@ const dirname = path.dirname(filename)
 
 const postsCollection: CollectionConfig = {
   slug: 'posts',
-  fields: [],
+  access: {
+    create: () => true,
+    delete: () => true,
+    read: () => true,
+    update: () => true,
+  },
+  fields: [
+    {
+      name: 'title',
+      type: 'text',
+      label: 'Title',
+      required: true,
+      unique: true,
+    },
+  ],
 }
 
 const mediaCollection: CollectionConfig = {
