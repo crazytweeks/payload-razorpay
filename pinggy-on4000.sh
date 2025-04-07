@@ -1,0 +1,1 @@
+ssh -p 443 -R0:localhost:4000 -L4300:localhost:4300 -o StrictHostKeyChecking=no -o ServerAliveInterval=30 M9vTKo5N3Wa@free.pinggy.io

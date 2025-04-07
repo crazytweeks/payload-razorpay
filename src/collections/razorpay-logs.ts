@@ -1,7 +1,8 @@
 import type { CollectionConfig } from 'payload'
 
+export const __RazorpayLogsCollectionSlug = 'razorpay-logs'
 export const RazorpayLogs: CollectionConfig = {
-  slug: 'razorpay-logs',
+  slug: __RazorpayLogsCollectionSlug,
   admin: {
     group: 'Razorpay',
   },

@@ -158,9 +158,9 @@ export interface Media {
 export interface RazorpayOrder {
   id: number;
   payment: {
-    status: 'pending' | 'paid' | 'failed' | 'refunded';
+    status: 'created' | 'authorized' | 'captured' | 'pending' | 'paid' | 'failed' | 'refunded';
     /**
-     * Total amount in smallest currency unit (paise)
+     * Amount in smallest currency unit (paise)
      */
     amount: number;
     currency: string;
@@ -176,6 +176,18 @@ export interface RazorpayOrder {
      * Related refunds
      */
     refunds?: (number | RazorpayRefund)[] | null;
+    /**
+     * Razorpay Order Payload
+     */
+    order_payload?:
+      | {
+          [k: string]: unknown;
+        }
+      | unknown[]
+      | string
+      | number
+      | boolean
+      | null;
   };
   updatedAt: string;
   createdAt: string;
@@ -431,6 +443,7 @@ export interface RazorpayOrdersSelect<T extends boolean = true> {
         razorpay_order_id?: T;
         transactions?: T;
         refunds?: T;
+        order_payload?: T;
       };
   updatedAt?: T;
   createdAt?: T;

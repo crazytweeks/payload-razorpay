@@ -135,7 +135,7 @@ export const useRazorpayFetch = (): RazorpayFetchHookReturn => {
       }
 
       // Create Razorpay order
-      const orderResponse = await fetch('/api/razorpay/create-payment', {
+      const orderResponse = await fetch('/api/razorpay/create-order-payment', {
         body: JSON.stringify({
           amount: options.amount,
           currency: options.currency || 'INR',

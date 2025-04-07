@@ -1,7 +1,7 @@
 import type { Endpoint } from 'payload'
 
 import { configHandler } from './config'
-import { createPayment, verifyPayment } from './payment'
+import { createOrderAndPayment, verifyPayment } from './payment'
 import { webhookHandler } from './webhook'
 
 export const endpoints: Endpoint[] = [
@@ -16,9 +16,9 @@ export const endpoints: Endpoint[] = [
     path: '/razorpay/webhook',
   },
   {
-    handler: createPayment,
+    handler: createOrderAndPayment,
     method: 'post',
-    path: '/razorpay/create-payment',
+    path: '/razorpay/create-order-payment',
   },
   {
     handler: verifyPayment,

@@ -1,7 +1,8 @@
 import type { CollectionConfig } from 'payload'
 
+export const RazorpayTransactionsCollectionSlug = 'razorpay-transactions'
 export const RazorpayTransactions: CollectionConfig = {
-  slug: 'razorpay-transactions',
+  slug: RazorpayTransactionsCollectionSlug,
   admin: {
     defaultColumns: ['razorpay_payment_id', 'amount', 'status', 'createdAt'],
     group: 'Razorpay',
@@ -70,6 +71,7 @@ export const RazorpayTransactions: CollectionConfig = {
       admin: {
         description: 'Related order',
       },
+      label: 'Related Order',
       relationTo: 'razorpay-orders',
     },
     {

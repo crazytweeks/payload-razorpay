@@ -10,6 +10,9 @@ export const orderFields: Field[] = [
         type: 'select',
         defaultValue: 'pending',
         options: [
+          { label: 'Created', value: 'created' },
+          { label: 'Authorized', value: 'authorized' },
+          { label: 'Captured', value: 'captured' },
           { label: 'Pending', value: 'pending' },
           { label: 'Paid', value: 'paid' },
           { label: 'Failed', value: 'failed' },
@@ -21,7 +24,7 @@ export const orderFields: Field[] = [
         name: 'amount',
         type: 'number',
         admin: {
-          description: 'Total amount in smallest currency unit (paise)',
+          description: 'Amount in smallest currency unit (paise)',
         },
         required: true,
       },
@@ -55,6 +58,15 @@ export const orderFields: Field[] = [
         },
         hasMany: true,
         relationTo: 'razorpay-refunds',
+      },
+
+      {
+        name: 'order_payload',
+        type: 'json',
+        admin: {
+          description: 'Razorpay Order Payload',
+        },
+        required: false,
       },
     ],
   },

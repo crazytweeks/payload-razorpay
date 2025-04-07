@@ -2,8 +2,9 @@ import type { CollectionConfig } from 'payload'
 
 import { orderFields } from './extensions/orders'
 
+export const RazorpayOrdersCollectionSlug = 'razorpay-orders'
 export const RazorpayOrders: CollectionConfig = {
-  slug: 'razorpay-orders',
+  slug: RazorpayOrdersCollectionSlug,
   admin: {
     group: 'Razorpay',
   },
