@@ -219,10 +219,9 @@ const run = async () => {
   }
 
   const exists = await razorpay.customers.all().catch((err) => {
-    console.log('err: dont exist ', err)
+    console.log('err: not exist ', err)
     return undefined
   })
-  console.log('exists: ', exists)
 
   if (exists) {
     return exists
@@ -236,11 +235,3 @@ const run = async () => {
 
   return customerInRazorpay
 }
-
-run()
-  .then((res) => {
-    console.log('res: ', res)
-  })
-  .catch((err) => {
-    console.log('err: ', err)
-  })
