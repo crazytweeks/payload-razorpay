@@ -1,8 +1,11 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "noEmit": true,
-    "rootDir": "./",
+    "noEmit": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "rootDir": "./src",
+    "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],

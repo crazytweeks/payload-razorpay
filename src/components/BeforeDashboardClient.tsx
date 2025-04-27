@@ -12,7 +12,6 @@ export const BeforeDashboardClient = () => {
   const { theme } = useTheme()
   const { config } = useConfig()
   const [configStatus, setConfigStatus] = useState<ConfigStatus>()
-  const [message, setMessage] = useState('')
 
   const backgroundColor = theme === 'dark' ? '#333' : '#f7f7f7'
   const textColor = theme === 'dark' ? '#fff' : '#000'
